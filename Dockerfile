@@ -2,7 +2,8 @@ FROM golang:1.16-alpine as builder
 RUN apk add --no-cache git
 WORKDIR /go/croc
 COPY . .
-RUN go build -v -ldflags="-s -w"
+RUN export GOPROXY=https://goproxy.io,direct \
+&& go build -v -ldflags="-s -w"
 
 FROM alpine:latest 
 EXPOSE 9009
